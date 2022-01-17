@@ -24,6 +24,7 @@ private:
     std::fstream ifs;
     double resolution_multiplier;
     double displacement_offset;
+    std::unordered_map<std::string, std::pair<cv::Point, cv::Point>> bounds;
     std::unordered_map<std::string, std::vector<cv::Point>> lanes;
 
     cv::Mat latest_map;
@@ -33,6 +34,8 @@ public:
     // initializer
     map_parser();
     map_parser(std::string _map_type, std::string protopath);
+    // get bounds of each element of interest
+    bool get_bounds();
     // load map file locate in protopath
     bool load_map();
     // [ADCM] load map

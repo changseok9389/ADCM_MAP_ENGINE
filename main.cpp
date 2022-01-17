@@ -6,6 +6,7 @@ int main(){
     map.set_resolution_multiplier(3);
     map.load_map();
     map.parse_map();
+    map.get_bounds();
     map.draw_map();
     map.show_map_debug(224);
     return 0;

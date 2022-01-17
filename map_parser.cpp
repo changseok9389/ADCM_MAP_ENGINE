@@ -39,6 +39,17 @@ map_parser::map_parser(std::string _map_type, std::string protopath){
     ifs.close();
 }
 
+bool map_parser::get_bounds() {
+    for(auto element : lanes){
+        cv::Rect boundingArea = cv::boundingRect(element.second);
+//        boundingArea.tl();
+//        boundingArea.br() - cv::Point(1,1);
+        bounds[element.first] = std::pair(boundingArea.tl(), boundingArea.br() - cv::Point(1,1));
+        std::cout << "(" << bounds[element.first].first.x << ", " << bounds[element.first].first.y << "), (" << bounds[element.first].second.x << ", " << bounds[element.first].second.y << ")" << std::endl;
+    }
+    return true;
+}
+
 bool map_parser::load_map()
 {
     if (pb_path == "")
