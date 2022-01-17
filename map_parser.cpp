@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <algorithm>
 #include <google/protobuf/text_format.h>
 
 #include "COLORS.h"
@@ -22,7 +23,8 @@ map_parser::map_parser(){
     std::cout << "default initializer called" << std::endl;
 }
 
-map_parser::map_parser(std::string protopath){
+map_parser::map_parser(std::string _map_type, std::string protopath){
+    map_type = _map_type;
     pb_path = protopath;
     resolution_multiplier = 1.0;
     displacement_offset = 3797.47 * resolution_multiplier;
@@ -56,6 +58,12 @@ bool map_parser::load_map()
     return false;
 
 }
+
+bool map_parser::ADCM_load_map() {
+    setMapFilePath(pb_path.c_str());
+    ADCM_MAP.push_back(requestMapDataInGrid_ID(1035988));
+}
+
 
 bool map_parser::parse_map(){
     // extract polygons
@@ -107,6 +115,48 @@ bool map_parser::parse_map(){
     return true;
 }
 
+bool map_parser::ADCM_parse_map() {
+    for(auto map : ADCM_MAP){
+        // parse Roads
+        for(auto v : map.vRoads){
+            // parse lane
+            for(auto l : v.vLanes){
+            }
+
+            // parse line
+            for(auto l : v.vLines){
+
+            }
+        }
+
+        // parse Border
+        for(auto v : map.vBorders){
+
+        }
+
+        // parse Junction
+        for(auto v : map.vJunctions){
+
+        }
+
+        // parse Stop Line
+        for (auto v : map.vStopLines){
+
+        }
+
+        // parse Crosswalk
+        for (auto v : map.vCrosswalks_out){
+
+        }
+
+        // parse Parkinglot
+        for (auto v : map.vParkinglots){
+
+        }
+    }
+
+}
+
 void map_parser::set_resolution_multiplier(double value){
     resolution_multiplier = value;
     displacement_offset *= resolution_multiplier;
@@ -133,7 +183,7 @@ void map_parser::draw_map(){
 
     }
     latest_map = img;
-    cv::imwrite("/Users/ochangseog/CLionProjects/ADCM_MAP_ENGINE/img.png", img);
+    cv::imwrite("/home/changseok/Desktop/ADCM_MAP_ENGINE/img.png", img);
 }
 
 
@@ -170,18 +220,18 @@ void map_parser::show_map_debug(int fov){
         cv::Mat roi = latest_map(boader& bounds);
         cv::imshow("ROI", roi);
         in = cv::waitKey(0);
-
+        std::cout << (int)in << std::endl;
         switch((int)in){
-            case 0:
+            case 82:
                 loc_y -= 10;
                 break;
-            case 1:
+            case 84:
                 loc_y += 10;
                 break;
-            case 2:
+            case 81:
                 loc_x -= 10;
                 break;
-            case 3:
+            case 83:
                 loc_x += 10;
                 break;
             default:

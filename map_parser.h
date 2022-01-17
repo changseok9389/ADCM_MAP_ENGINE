@@ -11,10 +11,14 @@
 #include <unordered_map>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "MapStructs.h"
+#include "MDAL.h"
 
 
 class map_parser {
 private:
+    std::vector<LOCAL_MAP> ADCM_MAP;
+    std::string map_type;
     std::string pb_path;
     l5kit::maps::MapFragment f;
     std::fstream ifs;
@@ -28,11 +32,15 @@ private:
 public:
     // initializer
     map_parser();
-    map_parser(std::string protopath);
+    map_parser(std::string _map_type, std::string protopath);
     // load map file locate in protopath
     bool load_map();
+    // [ADCM] load map
+    bool ADCM_load_map();
     // parse map polygons from map object
     bool parse_map();
+    // [ADCM]parse_map
+    bool ADCM_parse_map();
     // set resolution_multiplier
     void set_resolution_multiplier(double value);
     // get resolution_multiplier

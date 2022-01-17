@@ -2,7 +2,7 @@
 
 int main(){
 
-    map_parser map = map_parser("/tmp/tmp.216LQpgm9W/semantic_map.pb");
+    map_parser map = map_parser("LYFT", "/home/changseok/CLionProjects/ADCM_MAP_ENGINE/semantic_map.pb");
     map.set_resolution_multiplier(3);
     map.load_map();
     map.parse_map();
