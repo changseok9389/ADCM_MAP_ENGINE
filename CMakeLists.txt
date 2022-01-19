@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 project(ADCM_MAP_ENGINE)
 
 set(CMAKE_PREFIX_PATH   ${CMAKE_SOURCE_DIR})
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 
 find_package(Protobuf REQUIRED)
 find_package(OpenCV REQUIRED)

@@ -44,7 +44,7 @@ bool map_parser::get_bounds() {
         cv::Rect boundingArea = cv::boundingRect(element.second);
 //        boundingArea.tl();
 //        boundingArea.br() - cv::Point(1,1);
-        bounds[element.first] = std::pair(boundingArea.tl(), boundingArea.br() - cv::Point(1,1));
+        bounds[element.first] = std::pair<cv::Point, cv::Point>(boundingArea.tl(), boundingArea.br() - cv::Point(1,1));
         std::cout << "(" << bounds[element.first].first.x << ", " << bounds[element.first].first.y << "), (" << bounds[element.first].second.x << ", " << bounds[element.first].second.y << ")" << std::endl;
     }
     return true;
